@@ -101,8 +101,8 @@ describe('actions', () => {
     it('has the correct type and payload', () => {
       var scope = nock(ROOT_URL).post('/signup',function(body) {return { email: 'test@gmail.com', password: "test"}}).reply(200,{ return_msg:"Plase confirm email" });
       const store = mockStore({});
-
-      return store.dispatch(actions.signupUser('test@gmail.com',"test")).then(() => {
+      //Only checks payload don't care if redirect is correct
+      return store.dispatch(actions.signupUser('test@gmail.com',"test"),nil).then(() => {
         const act = store.getActions();
         const expectedPayload = { type: AUTH_EMAIL_SENT, payload: "Plase confirm email" }
         expect(act[0].type).to.equal(expectedPayload.type);
@@ -118,8 +118,8 @@ describe('actions', () => {
     it('has the correct type and payload', () => {
       var scope = nock(ROOT_URL).post('/confirmation',function(body) {return { token: 'tokenbs123'}}).reply(200,{ token: "majorbs123" , refreshToken: "bs123"});
       const store = mockStore({});
-
-      return store.dispatch(actions.confirmationEmail("tokenbs123")).then(() => {
+      //Only checks payload don't care if redirect is correct
+      return store.dispatch(actions.confirmationEmail("tokenbs123"),nil).then(() => {
         const act = store.getActions();
         const expectedPayload = { type: AUTH_USER }
         expect(act[0].type).to.equal(expectedPayload.type);

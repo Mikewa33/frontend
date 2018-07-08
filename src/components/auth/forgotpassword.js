@@ -14,8 +14,6 @@ const renderInput = field => {
 
 class Forgotpassword extends Component {
   handleFormSubmit({ email }) {
-    // Need to do something to log user in
-    //this.props.signinUser({ email, password });
     this.props.forgotPassword({ email });
   }
 

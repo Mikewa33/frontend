@@ -6,5 +6,3 @@ export const FLASH = 'flash';
 export const CLEAN_FLASH = "clean_flash";
 export const AUTH_EMAIL_SENT = "auth_email_sent";
 export const ERROR_CLEAR = "error_clear";
-//Studio
-export const LOAD_STUDIO = "studio_load"

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -18,9 +17,6 @@ export function forgotPassword({email}){
     return axios.post(`${ROOT_URL}/forgotpassword`,{email})
       .then(response => {
         dispatch(emailWasSent(response.data.return_msg));
-        //window.setTimeout(() => {
-        //  dispatch({ type: CLEAN_FLASH })
-        //}, 4000);
 
       })
       .catch(response => {
@@ -78,17 +74,13 @@ export function signupUser({ email, password }) {
     return axios.post(`${ROOT_URL}/signup`, { email, password })
       .then(response => {
         dispatch(emailWasSent(response.data.return_msg));
-        //dispatch({ type: AUTH_USER });
-        //localStorage.setItem('token', response.data.token);
-        //browserHistory.push('/feature');
       })
       .catch(error => {
-        console.log(error.response)
         dispatch(authError(error.response.data.error));});
   }
 }
 
-export function confirmationEmail(token){
+export function confirmationEmail(token, callback){
   return function(dispatch) {
     return axios.post(`${ROOT_URL}/confirmation`, { token })
       .then(response => {
@@ -100,7 +92,7 @@ export function confirmationEmail(token){
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('refreshToken', response.data.refreshToken);
         // - redirect to the route '/feature'
-        //browserHistory.push('/signup');
+        callback()
       })
       .catch(response => {
         dispatch(authError(error.response.data.error));});
@@ -147,6 +139,7 @@ export function fetchMessage() {
         });
       })
       .catch(response => {
+        //This means the user isn't auth
         callingRefresh(response,"/feature",dispatch);
       });
   }

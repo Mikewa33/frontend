@@ -5,8 +5,10 @@ import * as actions from '../../actions/authActions';
 class Confirmation extends Component {
   componentWillMount() {
   	if(this.props.location){
-    	this.props.confirmationEmail(this.props.location.query.token);
-	}
+    	this.props.confirmationEmail(this.props.location.query.token,() => {
+        this.props.history.push('/feature');
+      });
+	  }
   }
 
   render() {
