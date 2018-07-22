@@ -16,7 +16,7 @@ import Confirmation from './components/auth/confirmation'
 const RoutesLib = () => {
     return (
         <Switch>
-            <Route path="/" exact component={App}/>
+            <Route path="/" exact component={Welcome}/>
             <Route path="/signin" component={Signin} />
             <Route path="/signout" component={Signout} />
             <Route path="/signup" component={Signup} />
