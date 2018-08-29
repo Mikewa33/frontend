@@ -2,13 +2,14 @@ import axios from 'axios';
 import {
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR,
-  FLASH,
   FETCH_MESSAGE,
   CLEAN_FLASH,
   AUTH_EMAIL_SENT,
-  ERROR_CLEAR
+  AUTH_ERROR,
+  AUTH_ERROR_CLEAR
 } from './types';
+
+import { callingRefresh, flash } from './appWide'
 
 const ROOT_URL = 'http://localhost:3090';
 
@@ -32,18 +33,12 @@ export function resetPassword({password},token_query, callback){
         dispatch(flash(response.data.return_msg));
         window.setTimeout(() => {
           dispatch({ type: CLEAN_FLASH })
-        }, 4000);
+        }, 8000);
         callback();
       }).catch(() =>{
         dispatch(authError("Something went wrong please try again"));
       })
     }
-}
-
-export function clearErrorMsg(){
-  return {
-    type: ERROR_CLEAR
-  }
 }
 
 
@@ -75,8 +70,8 @@ export function signupUser({ email, password }) {
       .then(response => {
         dispatch(emailWasSent(response.data.return_msg));
       })
-      .catch(error => {
-        dispatch(authError(error.response.data.error));});
+      .catch(response => {
+        dispatch(authError(response.response.data.error));});
   }
 }
 
@@ -95,7 +90,7 @@ export function confirmationEmail(token, callback){
         callback()
       })
       .catch(response => {
-        dispatch(authError(error.response.data.error));});
+        dispatch(authError(response.response.data.error));});
   }
 }
 
@@ -106,24 +101,8 @@ export function emailWasSent(msg){
   }
 }
 
-export function authError(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
-  };
-}
-
-export function flash(flash) {
-  return {
-    type: FLASH,
-    payload: flash
-  };
-}
-
-
 export function signoutUser() {
   localStorage.removeItem('token');
-
   return { type: UNAUTH_USER };
 }
 
@@ -145,7 +124,20 @@ export function fetchMessage() {
   }
 }
 
-export function callingRefresh(response, previous_url,dispatch){
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  };
+}
+
+export function authClearErrorMsg(){
+  return {
+    type: AUTH_ERROR_CLEAR
+  }
+}
+
+/* export function callingRefresh(response, previous_url,dispatch){
     axios.get(`${ROOT_URL}/refreshing`, {
       headers: { authorization: localStorage.getItem('refreshToken') }
     })
@@ -161,4 +153,4 @@ export function callingRefresh(response, previous_url,dispatch){
           type: UNAUTH_USER
         });
       });
-}
+} */

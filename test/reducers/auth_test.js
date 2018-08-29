@@ -4,15 +4,12 @@ import {
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR,
-  FLASH,
   FETCH_MESSAGE,
-  CLEAN_FLASH,
   AUTH_EMAIL_SENT,
-  AUTH_EMAIL_RESET,
-  ERROR_CLEAR
+  AUTH_ERROR_CLEAR
 } from '../../src/actions/types';
 
-describe('Comments Reducer', () => {
+describe('Auth Reducer', () => {
   it('handles action with unknown type', () => {
     expect(authReducer(undefined, {})).to.eql({});
   });
@@ -38,7 +35,7 @@ describe('Comments Reducer', () => {
   });
 
   it('handles action of type ERROR_CLEAR', () => {
-    const action = { type: ERROR_CLEAR };
+    const action = { type: AUTH_ERROR_CLEAR };
     expect(authReducer([], action)).to.eql({ error: '',emailSent:null } );
   });
 

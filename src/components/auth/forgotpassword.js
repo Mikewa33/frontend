@@ -18,7 +18,7 @@ class Forgotpassword extends Component {
   }
 
   componentWillMount() {
-    this.props.clearErrorMsg();
+    this.props.authClearErrorMsg();
   }
 
   renderAlert() {

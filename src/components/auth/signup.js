@@ -17,7 +17,7 @@ const renderInput = (field) => {
 class Signup extends Component {
 
   componentWillMount() {
-    this.props.clearErrorMsg();
+    this.props.authClearErrorMsg();
   }
 
   handleFormSubmit(formProps) {
@@ -46,7 +46,7 @@ class Signup extends Component {
             <fieldset className="form-group">
                <Field name="email" type="email" component={renderInput} id="email-input" label="Email" />
             </fieldset>
-            <fieldset className="form-group">
+            <fieldset className="form-group" id="test1">
                <Field name="password" type="password" component={renderInput} id="password-input" label="Password" />
             </fieldset>
             <fieldset className="form-group">

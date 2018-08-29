@@ -11,7 +11,10 @@ import Resetpassword from './components/auth/resetpassword';
 import Feature from './components/feature';
 import RequireAuth from './components/auth/require_auth';
 import Welcome from './components/welcome';
-import Confirmation from './components/auth/confirmation'
+import Confirmation from './components/auth/confirmation';
+import Account from './components/account/account';
+import EditEmail from './components/account/editemail';
+import EditPassword from './components/account/editpassword';
 
 const RoutesLib = () => {
     return (
@@ -24,6 +27,9 @@ const RoutesLib = () => {
             <Route path="/resetpassword" component={Resetpassword} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/feature" component={RequireAuth(Feature)} />
+            <Route path='/account' component={RequireAuth(Account)} />
+            <Route path="/editemail" component={RequireAuth(EditEmail)} />
+            <Route path="/editpassword" component={RequireAuth(EditPassword)} />
         </Switch>
     )
 };

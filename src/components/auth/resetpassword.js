@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import queryString from 'query-string';
 import { reduxForm, Field, Form } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/authActions';
@@ -17,12 +18,11 @@ const renderInput = (field) => {
 class Resetpassword extends Component {
 
   componentWillMount() {
-    this.props.clearErrorMsg();
+    this.props.authClearErrorMsg();
   }
 
   handleFormSubmit(formProps) {
-    // Call action creator to sign up the user!
-    this.props.resetPassword(formProps,this.props.location.query.reset,() => {
+    this.props.resetPassword(formProps,queryString.parse(this.props.location.search).reset,() => {
       this.props.history.push('/signin');
     });
   }

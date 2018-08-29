@@ -1,11 +1,10 @@
 import {
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR,
-  AUTH_FLASH,
+  AUTH_ERROR_CLEAR,
   FETCH_MESSAGE,
   AUTH_EMAIL_SENT,
-  ERROR_CLEAR
+  AUTH_ERROR
 } from '../actions/types';
 
 export default function(state = {}, action) {
@@ -19,7 +18,7 @@ export default function(state = {}, action) {
       return { ...state, error: action.payload };
     case AUTH_EMAIL_SENT:
       return { ...state, error: '',emailSent: action.payload };
-    case ERROR_CLEAR:
+    case AUTH_ERROR_CLEAR:
       return { ...state, error: '', emailSent: null};
     case FETCH_MESSAGE:
       return { ...state, message: action.payload };

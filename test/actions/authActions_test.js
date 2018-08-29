@@ -1,5 +1,4 @@
 import nock from 'nock'
-import React from 'react'
 import {expect} from 'chai'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -9,19 +8,15 @@ const mockStore = configureMockStore(middlewares)
 import {
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR,
-  FLASH,
   FETCH_MESSAGE,
-  CLEAN_FLASH,
   AUTH_EMAIL_SENT,
-  AUTH_EMAIL_RESET,
-  ERROR_CLEAR
+  AUTH_ERROR_CLEAR
 } from '../../src/actions/types';
 
 import * as actions from '../../src/actions/authActions';
 const ROOT_URL = 'http://localhost:3090';
-//for now doesnt work
-describe('actions', () => {
+
+describe('auth actions', () => {
 
     beforeEach(() => {
         nock.disableNetConnect();
@@ -48,8 +43,6 @@ describe('actions', () => {
         expect(act[0].type).to.equal(expectedPayload.type);
         expect(act[0].payload).to.equal(expectedPayload.payload);
       })
-
-
     });
   });
 
@@ -72,9 +65,8 @@ describe('actions', () => {
 
   describe('clearErrorMsg',() => {
     it('has the correct type',() =>{
-        const act = actions.clearErrorMsg();
-        expect(act.type).to.equal(ERROR_CLEAR);
-
+        const act = actions.authClearErrorMsg();
+        expect(act.type).to.equal(AUTH_ERROR_CLEAR);
     })
   });
 
@@ -97,12 +89,11 @@ describe('actions', () => {
   });
 
   describe('signupUser', () => {
-
     it('has the correct type and payload', () => {
       var scope = nock(ROOT_URL).post('/signup',function(body) {return { email: 'test@gmail.com', password: "test"}}).reply(200,{ return_msg:"Plase confirm email" });
       const store = mockStore({});
       //Only checks payload don't care if redirect is correct
-      return store.dispatch(actions.signupUser('test@gmail.com',"test"),nil).then(() => {
+      return store.dispatch(actions.signupUser('test@gmail.com',"test")).then(() => {
         const act = store.getActions();
         const expectedPayload = { type: AUTH_EMAIL_SENT, payload: "Plase confirm email" }
         expect(act[0].type).to.equal(expectedPayload.type);
@@ -119,7 +110,7 @@ describe('actions', () => {
       var scope = nock(ROOT_URL).post('/confirmation',function(body) {return { token: 'tokenbs123'}}).reply(200,{ token: "majorbs123" , refreshToken: "bs123"});
       const store = mockStore({});
       //Only checks payload don't care if redirect is correct
-      return store.dispatch(actions.confirmationEmail("tokenbs123"),nil).then(() => {
+      return store.dispatch(actions.confirmationEmail("tokenbs123", () => { return "nothing"})).then(() => {
         const act = store.getActions();
         const expectedPayload = { type: AUTH_USER }
         expect(act[0].type).to.equal(expectedPayload.type);

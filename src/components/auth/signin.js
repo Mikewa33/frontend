@@ -17,7 +17,7 @@ class Signin extends Component {
 
   componentWillMount() {
     if(this.props.errorMessage){
-      this.props.clearErrorMsg();
+      this.props.authClearErrorMsg();
     }
   }
   

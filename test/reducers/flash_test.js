@@ -5,7 +5,7 @@ import {
   CLEAN_FLASH
 } from '../../src/actions/types'
 
-describe('Comments Reducer', () => {
+describe('Flash Reducer', () => {
   it('handles action with unknown type', () => {
     expect(flashReducer(undefined, {})).to.eql({});
   });
