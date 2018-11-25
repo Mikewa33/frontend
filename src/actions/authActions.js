@@ -18,7 +18,6 @@ export function forgotPassword({email}){
     return axios.post(`${ROOT_URL}/forgotpassword`,{email})
       .then(response => {
         dispatch(emailWasSent(response.data.return_msg));
-
       })
       .catch(response => {
         dispatch(authError("Emails are down try again later"));
